@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - HypermediaSystemsDemo</title>
+  <script type="importmap"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@picocss/pico@@2/css/pico.classless.indigo.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@@2.0.6/dist/htmx.min.js"></script>
+</head>
+
+<body>
+  <header class="container">
+    <nav>
+      <ul>
+        <li><strong>Hypermedia Systems Demo</strong></li>
+      </ul>
+      <ul>
+        <li>
+          <a asp-area="" asp-controller="Home" asp-action="Index">Contacts</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main role="main" class="container">
+    @RenderBody()
+  </main>
+
+</body>
+
+</html>

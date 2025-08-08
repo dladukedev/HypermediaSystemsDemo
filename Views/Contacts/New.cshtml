@@ -1,0 +1,15 @@
+@model ContactUpsertViewModel
+
+<form action="/Contacts/New" method="post">
+  <fieldset>
+    <h2>Contact Values</h2>
+
+    @await Html.PartialAsync("./ContactForm.cshtml", Model)
+
+    <button>Save</button>
+  </fieldset>
+</form>
+
+<p>
+  <a href="/Contacts">Back</a>
+</p>

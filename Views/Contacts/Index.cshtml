@@ -1,0 +1,25 @@
+@model ContactListViewModel
+@{
+ViewData["Title"] = "Contacts";
+}
+
+<h1>Contacts</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+<article>
+  @TempData["SuccessMessage"]
+</article>
+}
+
+
+<form role="search" action="/Contacts" method="get">
+  <input id="search" placeholder="Search" type="search" name="q" value="@(Model.SearchTerm ?? "")" />
+  <input type="submit" value="Search" />
+</form>
+
+@await Html.PartialAsync("./ContactList.cshtml", Model.Contacts)
+
+<p>
+  <a href="/Contacts/new">Add Contact</a>
+</p>

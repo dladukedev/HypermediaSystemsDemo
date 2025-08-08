@@ -1,0 +1,19 @@
+@model ContactUpsertViewModel
+
+<form action="/Contacts/Edit/@Model.Contact.Id" method="post">
+  <fieldset>
+    <h2>Contact Values</h2>
+
+    @await Html.PartialAsync("./ContactForm.cshtml", Model)
+
+    <button>Save</button>
+  </fieldset>
+</form>
+
+<form action="/Contacts/Delete/@Model.Contact.Id" method="post">
+  <button>Delete Contact</button>
+</form>
+
+<p>
+  <a href="/Contacts">Back</a>
+</p>

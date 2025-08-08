@@ -1,0 +1,17 @@
+@model ContactDetailsViewModel
+@{
+ViewData["Title"] = Model.Contact.FullName;
+}
+
+<h1>@Model.Contact.FullName</h1>
+
+<article>
+  <strong>Phone:</strong> @(Model.Contact.FormattedPhone ?? "-")
+  <br>
+  <strong>Email:</strong> @(Model.Contact.Email ?? "-")
+</article>
+
+<section>
+  <a href="/Contacts/Edit/@Model.Contact.Id">Edit</a>
+  <a href="/Contacts">Back</a>
+</section>

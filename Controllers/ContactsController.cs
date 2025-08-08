@@ -1,0 +1,133 @@
+using Microsoft.AspNetCore.Mvc;
+using HypermediaSystemsDemo.Contacts;
+using HypermediaSystemsDemo.Models;
+
+namespace HypermediaSystemsDemo.Controllers;
+
+public class ContactsController(
+    ILogger<HomeController> logger,
+    ContactRepository contactRepo
+  ) : Controller
+{
+  private readonly ILogger<HomeController> _logger = logger;
+  private readonly ContactRepository _contactRepo = contactRepo;
+
+  public IActionResult Index(string? q)
+  {
+    var contacts = _contactRepo.BrowseContacts(q);
+    var vm = new ContactListViewModel()
+    {
+      SearchTerm = q,
+      Contacts = contacts
+    };
+
+    return View(vm);
+  }
+
+  public IActionResult New()
+  {
+    var vm = new ContactUpsertViewModel();
+
+    return View(vm);
+  }
+
+  public IActionResult Details(int id)
+  {
+    var contact = _contactRepo.ReadContact(id);
+
+    if (contact is null)
+    {
+      return NotFound();
+    }
+
+    var vm = new ContactDetailsViewModel() { Contact = contact };
+
+    return View(vm);
+  }
+
+  [HttpPost]
+  [ActionName("New")]
+  public IActionResult New_Post(Contact contact)
+  {
+    var validationResult = ContactValidator.Validate(contact);
+
+    validationResult.Errors.ToList().ForEach(x =>
+    {
+      Console.WriteLine(x.Key + " " + string.Concat(x.Value));
+    });
+
+    if (validationResult.IsValid)
+    {
+      _contactRepo.AddContact(contact);
+
+      TempData["SuccessMessage"] = "Created New Contact!";
+      return Redirect("/Contacts");
+    }
+    else
+    {
+      var vm = new ContactUpsertViewModel()
+      {
+        Errors = validationResult.Errors,
+        Contact = contact,
+      };
+
+      return View(vm);
+    }
+  }
+
+  public IActionResult Edit(int id)
+  {
+    var updatingContact = _contactRepo.ReadContact(id);
+
+    if (updatingContact is null) return NotFound();
+
+    var vm = new ContactUpsertViewModel() { Contact = updatingContact };
+
+    return View(vm);
+  }
+
+  [HttpPost]
+  [ActionName("Edit")]
+  public IActionResult Edit_Post(int id, Contact contact)
+  {
+    var updatingContact = _contactRepo.ReadContact(id);
+
+    if (updatingContact is null) return NotFound();
+
+    var validationResult = ContactValidator.Validate(contact);
+
+    validationResult.Errors.ToList().ForEach(x =>
+    {
+      Console.WriteLine(x.Key + " " + string.Concat(x.Value));
+    });
+
+    if (validationResult.IsValid)
+    {
+      _contactRepo.EditContact(contact);
+
+      TempData["SuccessMessage"] = "Update Contact!";
+      return Redirect("/Contacts");
+    }
+    else
+    {
+      var vm = new ContactUpsertViewModel()
+      {
+        Errors = validationResult.Errors,
+        Contact = contact,
+      };
+
+      return View(vm);
+    }
+  }
+
+  [HttpPost]
+  public IActionResult Delete(int id)
+  {
+    var deletedContact = _contactRepo.DeleteContact(id);
+
+    if (deletedContact is null) return NotFound();
+
+    TempData["SuccessMessage"] = "Contact Removed!";
+    return Redirect("/Contacts");
+  }
+}

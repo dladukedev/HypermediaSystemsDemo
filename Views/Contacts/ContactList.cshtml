@@ -1,0 +1,26 @@
+@model List<HypermediaSystemsDemo.Contacts.Contact>
+
+  <table>
+    <thead>
+      <tr>
+        <th>First</th>
+        <th>Last</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th />
+      </tr>
+    </thead>
+    @foreach (var contact in Model)
+    {
+    <tr>
+      <td>@contact.FirstName</td>
+      <td>@contact.LastName</td>
+      <td>@(contact.FormattedPhone ?? "-")</td>
+      <td>@(contact.Email ?? "-")</td>
+      <td>
+        <a href="/Contacts/Edit/@contact.Id">Edit</a>
+        <a href="/Contacts/Details/@contact.Id">View</a>
+      </td>
+    </tr>
+    }
+  </table>

@@ -1,0 +1,29 @@
+@model ContactUpsertViewModel
+
+<p>
+  <label for="first_name">First Name</label>
+  <input name="FirstName" id="first_name" type="text" placeholder="First Name" value="@(Model.Contact.FirstName)"
+    @(Model.HasError("FirstName") ? "aria-invalid=true" : "" ) aria-describedby="first_name-errors">
+  <small id="first_name-errors">@Model.GetErrorString("FirstName")</small>
+</p>
+
+<p>
+  <label for="last_name">Last Name</label>
+  <input name="LastName" id="last_name" type="text" placeholder="Last Name" value="@(Model.Contact.LastName)"
+    @(Model.HasError("LastName") ? "aria-invalid=true" : "" ) aria-describedby="last_name-errors">
+  <small id="last_name-errors">@Model.GetErrorString("LastName")</small>
+</p>
+
+<p>
+  <label for="phone">Phone</label>
+  <input name="PhoneNumber" id="phone" type="text" placeholder="Phone" value="@(Model.Contact.PhoneNumber)"
+    @(Model.HasError("Phone") ? "aria-invalid=true" : "" ) aria-describedby="phone-errors">
+  <small id="phone-errors">@Model.GetErrorString("Phone")</small>
+</p>
+
+<p>
+  <label for="email">Email</label>
+  <input name="Email" id="email" type="email" placeholder="Email" value="@(Model.Contact.Email)"
+    @(Model.HasError("Email") ? "aria-invalid=true" : "" ) aria-describedby="email-errors">
+  <small id="email-errors">@Model.GetErrorString("Email")</small>
+</p>
