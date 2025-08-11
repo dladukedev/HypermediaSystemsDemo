@@ -18,7 +18,7 @@ ViewData["Title"] = "Contacts";
   <input type="submit" value="Search" />
 </form>
 
-@await Html.PartialAsync("./ContactList.cshtml", Model.Contacts)
+@await Html.PartialAsync("./ContactList.cshtml", Model)
 
 <p>
   <a href="/Contacts/new">Add Contact</a>

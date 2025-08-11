@@ -6,4 +6,5 @@ public class ContactListViewModel
 {
   public string? SearchTerm { get; set; }
   public List<Contact> Contacts { get; set; } = [];
+  public int Page { get; set; }
 }

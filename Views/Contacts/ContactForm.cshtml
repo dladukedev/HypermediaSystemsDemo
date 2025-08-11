@@ -24,6 +24,21 @@
 <p>
   <label for="email">Email</label>
   <input name="Email" id="email" type="email" placeholder="Email" value="@(Model.Contact.Email)"
-    @(Model.HasError("Email") ? "aria-invalid=true" : "" ) aria-describedby="email-errors">
+    @(Model.HasError("Email") ? "aria-invalid=true" : "" ) aria-describedby="email-errors" hx-get="/Contacts/Email"
+    hx-target="next small" hx-trigger="change, keyup delay:200ms changed">
   <small id="email-errors">@Model.GetErrorString("Email")</small>
 </p>
+
+<!-- Coordinate the error message and the attribute for htmx -->
+<script>
+  document.body.addEventListener('htmx:afterSwap', e => {
+    if (e.target.matches('small[id$="-errors"]')) {
+      const input = e.target.previousElementSibling
+      if (e.target.textContent.trim() !== '') {
+        input.setAttribute('aria-invalid', e.target.textContent.trim() !== '')
+      } else {
+        input.removeAttribute('aria-invalid')
+      }
+    }
+  });
+</script>

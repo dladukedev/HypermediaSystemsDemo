@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using HypermediaSystemsDemo.Contacts;
 using HypermediaSystemsDemo.Models;
+using System.Net;
 
 namespace HypermediaSystemsDemo.Controllers;
 
@@ -12,13 +13,15 @@ public class ContactsController(
   private readonly ILogger<HomeController> _logger = logger;
   private readonly ContactRepository _contactRepo = contactRepo;
 
-  public IActionResult Index(string? q)
+  public IActionResult Index(string? q, int? page)
   {
-    var contacts = _contactRepo.BrowseContacts(q);
+    var pageValue = page == null ? 1 : page.Value;
+    var contacts = _contactRepo.BrowseContacts(q, pageValue);
     var vm = new ContactListViewModel()
     {
       SearchTerm = q,
-      Contacts = contacts
+      Contacts = contacts,
+      Page = pageValue
     };
 
     return View(vm);
@@ -75,6 +78,13 @@ public class ContactsController(
     }
   }
 
+  public IActionResult Email(string? email)
+  {
+    var validationResult = ContactValidator.ValidateEmail(email);
+
+    return Content(string.Join(", ", validationResult));
+  }
+
   public IActionResult Edit(int id)
   {
     var updatingContact = _contactRepo.ReadContact(id);
@@ -96,11 +106,6 @@ public class ContactsController(
 
     var validationResult = ContactValidator.Validate(contact);
 
-    validationResult.Errors.ToList().ForEach(x =>
-    {
-      Console.WriteLine(x.Key + " " + string.Concat(x.Value));
-    });
-
     if (validationResult.IsValid)
     {
       _contactRepo.EditContact(contact);
@@ -120,7 +125,7 @@ public class ContactsController(
     }
   }
 
-  [HttpPost]
+  [HttpDelete]
   public IActionResult Delete(int id)
   {
     var deletedContact = _contactRepo.DeleteContact(id);
@@ -128,6 +133,8 @@ public class ContactsController(
     if (deletedContact is null) return NotFound();
 
     TempData["SuccessMessage"] = "Contact Removed!";
-    return Redirect("/Contacts");
+
+    Response.Headers.Append("Location", "/Contacts");
+    return new StatusCodeResult((int)HttpStatusCode.SeeOther);
   }
 }

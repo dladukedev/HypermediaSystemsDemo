@@ -1,26 +1,35 @@
-@model List<HypermediaSystemsDemo.Contacts.Contact>
+@model ContactListViewModel
 
-  <table>
-    <thead>
-      <tr>
-        <th>First</th>
-        <th>Last</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th />
-      </tr>
-    </thead>
-    @foreach (var contact in Model)
-    {
+<table>
+  <thead>
     <tr>
-      <td>@contact.FirstName</td>
-      <td>@contact.LastName</td>
-      <td>@(contact.FormattedPhone ?? "-")</td>
-      <td>@(contact.Email ?? "-")</td>
-      <td>
-        <a href="/Contacts/Edit/@contact.Id">Edit</a>
-        <a href="/Contacts/Details/@contact.Id">View</a>
-      </td>
+      <th>First</th>
+      <th>Last</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th />
     </tr>
-    }
-  </table>
+  </thead>
+  @foreach (var contact in Model.Contacts)
+  {
+  <tr>
+    <td>@contact.FirstName</td>
+    <td>@contact.LastName</td>
+    <td>@(contact.FormattedPhone ?? "-")</td>
+    <td>@(contact.Email ?? "-")</td>
+    <td>
+      <a href="/Contacts/Edit/@contact.Id">Edit</a>
+      <a href="/Contacts/Details/@contact.Id">View</a>
+    </td>
+  </tr>
+  }
+  @if(Model.Contacts.Count == 10)
+  {
+  <tr>
+    <td colspan="5" style="text-align: center">
+      <span hx-target="closest tr" hx-swap="outerHTML" hx-select="tbody > tr" hx-trigger="revealed"
+        hx-get="/contacts?page=@(Model.Page + 1)">Loading More...</span>
+    </td>
+  </tr>
+  }
+</table>

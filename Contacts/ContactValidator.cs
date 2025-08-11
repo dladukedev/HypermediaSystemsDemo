@@ -70,7 +70,7 @@ public class ContactValidator
     return Errors;
   }
 
-  private static List<string> ValidateEmail(string? email)
+  public static List<string> ValidateEmail(string? email)
   {
     if (string.IsNullOrEmpty(email))
     {
