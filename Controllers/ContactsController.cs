@@ -17,6 +17,7 @@ public class ContactsController(
   {
     var pageValue = page == null ? 1 : page.Value;
     var contacts = _contactRepo.BrowseContacts(q, pageValue);
+
     var vm = new ContactListViewModel()
     {
       SearchTerm = q,
@@ -24,7 +25,21 @@ public class ContactsController(
       Page = pageValue
     };
 
+    Request.Headers.TryGetValue("HX-Trigger", out var htmxRequest);
+
+    if (htmxRequest == "search")
+    {
+      return PartialView("ContactList", vm);
+    }
+
     return View(vm);
+  }
+
+  public IActionResult Count()
+  {
+    var count = _contactRepo.BrowseContacts().Count;
+
+    return Content($" - ({count}) total Contacts");
   }
 
   public IActionResult New()
@@ -132,9 +147,41 @@ public class ContactsController(
 
     if (deletedContact is null) return NotFound();
 
-    TempData["SuccessMessage"] = "Contact Removed!";
+    Request.Headers.TryGetValue("HX-Trigger", out var htmxRequest);
 
-    Response.Headers.Append("Location", "/Contacts");
-    return new StatusCodeResult((int)HttpStatusCode.SeeOther);
+    if (htmxRequest == "delete-btn")
+    {
+      TempData["SuccessMessage"] = "Contact Removed!";
+
+      Response.Headers.Append("Location", "/Contacts");
+      return new StatusCodeResult((int)HttpStatusCode.SeeOther);
+    }
+
+    return Content("");
+  }
+
+  [HttpDelete]
+  public IActionResult BulkDelete(List<int> selected_contact_ids)
+  {
+    var removedCount = 0;
+
+    foreach (var id in selected_contact_ids)
+    {
+      var deletedContact = _contactRepo.DeleteContact(id);
+      if (deletedContact is not null) { removedCount++; }
+    }
+
+    var contacts = _contactRepo.BrowseContacts();
+
+    var vm = new ContactListViewModel()
+    {
+      SearchTerm = "",
+      Contacts = contacts,
+      Page = 1
+    };
+
+    TempData["SuccessMessage"] = $"{removedCount} Contact(s) Removed!";
+
+    return View("Index", vm);
   }
 }

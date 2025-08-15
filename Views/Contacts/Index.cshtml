@@ -3,6 +3,13 @@
 ViewData["Title"] = "Contacts";
 }
 
+<style>
+  tr.htmx-swapping {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+  }
+</style>
+
 <h1>Contacts</h1>
 
 @if (TempData["SuccessMessage"] != null)
@@ -14,12 +21,38 @@ ViewData["Title"] = "Contacts";
 
 
 <form role="search" action="/Contacts" method="get">
-  <input id="search" placeholder="Search" type="search" name="q" value="@(Model.SearchTerm ?? "")" />
+  <input id="search" placeholder="Search" type="search" name="q" hx-get="/contacts" hx-push-url="true"
+    hx-indicator="#spinner" hx-trigger="search, keyup delay:200ms changed" hx-target="tbody"
+    value="@(Model.SearchTerm ?? "")" />
+
   <input type="submit" value="Search" />
 </form>
+<article id="spinner" class="htmx-indicator" aria-busy="true"></article>
 
-@await Html.PartialAsync("./ContactList.cshtml", Model)
+<form>
+  <table>
+    <thead>
+      <tr>
+        <th />
+        <th>First</th>
+        <th>Last</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th />
+      </tr>
+    </thead>
+
+    @await Html.PartialAsync("./ContactList.cshtml", Model)
+
+  </table>
+
+  <button hx-delete="/Contacts/BulkDelete" hx-confirm="Are you sure you want to delete these contacts?" hx-target="body"
+    hx-swap="innerHTML show:window:top">Delete Selected Contacts</button>
+</form>
 
 <p>
   <a href="/Contacts/new">Add Contact</a>
+  <span hx-get="/Contacts/Count" hx-trigger="revealed">
+    <span aria-busy="true" class="htmx-indicator" />
+  </span>
 </p>

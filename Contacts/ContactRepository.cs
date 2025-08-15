@@ -72,13 +72,14 @@ public class ContactRepositoryImpl : ContactRepository
   public List<Contact> BrowseContacts(string? query = null, int? page = null)
   {
     var result = contacts;
+
     if (!string.IsNullOrEmpty(query))
     {
       result = result.Where(contact =>
-         contact.FirstName.Contains(query)
-         || contact.LastName.Contains(query)
-         || (contact.PhoneNumber?.Contains(query) ?? false)
-         || (contact.Email?.Contains(query) ?? false)
+         contact.FirstName.Contains(query, StringComparison.CurrentCultureIgnoreCase)
+         || contact.LastName.Contains(query, StringComparison.CurrentCultureIgnoreCase)
+         || (contact.PhoneNumber?.Contains(query, StringComparison.CurrentCultureIgnoreCase) ?? false)
+         || (contact.Email?.Contains(query, StringComparison.CurrentCultureIgnoreCase) ?? false)
       ).ToList();
     }
 
