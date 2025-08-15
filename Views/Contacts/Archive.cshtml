@@ -1,0 +1,25 @@
+@model HypermediaSystemsDemo.Contacts.ContactArchiver
+
+<div id="archive-ui" hx-target="this" hx-swap="outerHTML">
+  @switch(Model.GetStatus())
+  {
+  case ContactArchiverStatus.Waiting:
+  <button hx-post="/Contacts/Archive">
+    Download Contact Archive
+  </button>
+  break;
+
+  case ContactArchiverStatus.Running:
+  <div hx-get="/Contacts/Archive" hx-trigger="load delay:500ms">
+    <span>Creating Archive...</span><progress id="archive-progress" value="@((int)(Model.GetProgress() * 100))"
+      max="100" />
+  </div>
+  break;
+
+  case ContactArchiverStatus.Complete:
+  <a hx-boost="false" href="/Contacts/Archive/File">Archive Ready! Click here to download &downarrow;</a>
+  <button hx-delete="/Contacts/Archive">Clear Download</button>
+  // hx-push-url="false" hx-swap="innerHTML show:window:top"
+  break;
+  }
+</div>

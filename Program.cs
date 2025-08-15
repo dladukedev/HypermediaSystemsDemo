@@ -7,6 +7,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<ContactRepository, ContactRepositoryImpl>();
 
+builder.Services.AddSingleton<ContactArchiver, ContactArchiverImpl>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

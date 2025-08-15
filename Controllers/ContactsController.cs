@@ -2,15 +2,16 @@ using Microsoft.AspNetCore.Mvc;
 using HypermediaSystemsDemo.Contacts;
 using HypermediaSystemsDemo.Models;
 using System.Net;
+using System.Net.Mime;
 
 namespace HypermediaSystemsDemo.Controllers;
 
 public class ContactsController(
-    ILogger<HomeController> logger,
+    ContactArchiver contactArchiver,
     ContactRepository contactRepo
   ) : Controller
 {
-  private readonly ILogger<HomeController> _logger = logger;
+  private readonly ContactArchiver _contactArchiver = contactArchiver;
   private readonly ContactRepository _contactRepo = contactRepo;
 
   public IActionResult Index(string? q, int? page)
@@ -22,7 +23,8 @@ public class ContactsController(
     {
       SearchTerm = q,
       Contacts = contacts,
-      Page = pageValue
+      Page = pageValue,
+      Archiver = _contactArchiver
     };
 
     Request.Headers.TryGetValue("HX-Trigger", out var htmxRequest);
@@ -183,5 +185,35 @@ public class ContactsController(
     TempData["SuccessMessage"] = $"{removedCount} Contact(s) Removed!";
 
     return View("Index", vm);
+  }
+
+
+  public IActionResult Archive()
+  {
+    return PartialView("Archive", _contactArchiver);
+  }
+
+  [HttpPost]
+  [ActionName("Archive")]
+  public IActionResult Archive_Post()
+  {
+    _contactArchiver.StartJob();
+
+    return PartialView("Archive", _contactArchiver);
+  }
+
+  [Route("Contacts/Archive/File")]
+  public IActionResult Archive_File()
+  {
+    return File("~/contacts.json", MediaTypeNames.Text.Plain, "Contacts.json");
+  }
+
+  [HttpDelete]
+  [ActionName("Archive")]
+  public IActionResult Archive_Delete()
+  {
+    _contactArchiver.Reset();
+
+    return PartialView("Archive", _contactArchiver);
   }
 }
