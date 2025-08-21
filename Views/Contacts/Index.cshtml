@@ -22,15 +22,26 @@ ViewData["Title"] = "Contacts";
 @await Html.PartialAsync("./Archive.cshtml", Model.Archiver)
 
 <form role="search" action="/Contacts" method="get">
-  <input id="search" placeholder="Search" type="search" name="q" hx-get="/contacts" hx-push-url="true"
-    hx-indicator="#spinner" hx-trigger="search, keyup delay:200ms changed" hx-target="tbody"
-    value="@(Model.SearchTerm ?? "")" />
+  <input id="search" placeholder="Search" _="on keydown[altKey and code is 'KeyS'] from the window focus() me"
+    type="search" name="q" hx-get="/contacts" hx-push-url="true" hx-indicator="#spinner"
+    hx-trigger="search, keyup delay:200ms changed" hx-target="tbody" value="@(Model.SearchTerm ?? "")" />
 
   <input type="submit" value="Search" />
 </form>
 <article id="spinner" class="htmx-indicator" aria-busy="true"></article>
 
-<form>
+<form x-data="{ selected: [] }">
+  <template x-if="selected.length > 0">
+    <div tool-bar>
+      <slot x-text="selected.length"></slot>
+      contacts selected
+
+      <button type="button"
+        @@click="confirm(`Delete ${selected.length} contacts?`) && htmx.ajax('DELETE', '/Contacts/BulkDelete', {source:$root, target: document.body })">Delete</button>
+      <button type="button" @@click="selected = []">Cancel</button>
+    </div>
+  </template>
+
   <table>
     <thead>
       <tr>

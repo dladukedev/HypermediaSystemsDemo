@@ -179,7 +179,8 @@ public class ContactsController(
     {
       SearchTerm = "",
       Contacts = contacts,
-      Page = 1
+      Page = 1,
+      Archiver = _contactArchiver
     };
 
     TempData["SuccessMessage"] = $"{removedCount} Contact(s) Removed!";
