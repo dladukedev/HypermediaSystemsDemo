@@ -1,0 +1,45 @@
+@model ContactUpsertViewModel
+
+<view style="edit-group" xmlns="https://hyperview.org/hyperview">
+  @if (TempData["ContactSaveSuccess"] != null)
+  {
+  <behavior trigger="load" action="dispatch-event" event-name="contact-updated" />
+  <behavior trigger="load" action="reload" href="/app/contacts/@Model.Contact.Id" />
+  }
+
+  <view style="edit-field">
+    <text style="edit-field-label">First Name</text>
+    <text-field name="FirstName" placeholder="First name" value="@Model.Contact.FirstName" />
+    @if (@Model.HasError("FirstName"))
+    {
+    @:<text style="edit-field-error">@Model.GetErrorString("FirstName")</text>
+    }
+  </view>
+
+  <view style="edit-field">
+    <text style="edit-field-label">Last Name</text>
+    <text-field name="LastName" placeholder="Last name" value="@Model.Contact.LastName" />
+    @if (@Model.HasError("LastName"))
+    {
+    @:<text style="edit-field-error">@Model.GetErrorString("LastName")</text>
+    }
+  </view>
+
+  <view style="edit-field">
+    <text style="edit-field-label">Phone</text>
+    <text-field name="PhoneNumber" placeholder="Phone" value="@Model.Contact.PhoneNumber" />
+    @if (@Model.HasError("Phone"))
+    {
+    @:<text style="edit-field-error">@Model.GetErrorString("Phone")</text>
+    }
+  </view>
+
+  <view style="edit-field">
+    <text style="edit-field-label">Email</text>
+    <text-field name="Email" placeholder="Email" value="@Model.Contact.Email" />
+    @if (@Model.HasError("Email"))
+    {
+    @:<text style="edit-field-error">@Model.GetErrorString("Email")</text>
+    }
+  </view>
+</view>

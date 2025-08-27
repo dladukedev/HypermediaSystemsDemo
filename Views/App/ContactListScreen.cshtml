@@ -1,0 +1,31 @@
+@model ContactAppListViewModel
+@{
+Layout = "_AppLayout";
+}
+
+@section Header{
+<text style="header-title">
+  Contacts
+</text>
+
+<text style="header-button">
+  <behavior trigger="press" action="new" href="/app/contacts/new" />
+  Add
+</text>
+}
+
+<form>
+  <behavior trigger="on-event" event-name="contact-updated" action="replace-inner" target="contacts-list"
+    href="/app/contacts?rows_only=true" verb="get" />
+
+  <view style="search-field-area">
+    <text-field name="q" value="" placeholder="Search..." style="search-field">
+      <behavior trigger="change" action="replace-inner" target="contacts-list" href="/app/contacts?rows_only=true"
+        verb="get" />
+    </text-field>
+  </view>
+  <list id="contacts-list" trigger="refresh" action="replace-inner" target="contacts-list"
+    href="/app/contacts?rows_only=true" verb="get">
+    @await Html.PartialAsync("./ContactList.cshtml", Model)
+  </list>
+</form>

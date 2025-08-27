@@ -1,0 +1,35 @@
+@model ContactUpsertViewModel
+
+@{
+Layout = "_AppLayout";
+}
+
+
+@section Header{
+<text style="header-button">
+  <behavior trigger="press" action="close" />
+  Close
+</text>
+
+<text style="header-title">
+  Add Contact
+</text>
+
+<view />
+}
+
+<form>
+  <view id="form-fields">
+    @await Html.PartialAsync("./ContactForm.cshtml", Model)
+  </view>
+
+  <view style="button button-primary">
+    <behavior trigger="press" action="replace-inner" target="form-fields" href="/app/contacts/new" verb="post" />
+    <text style="button-label button-label-primary">Add Contact</text>
+  </view>
+
+  <view style="button">
+    <behavior trigger="press" action="close" />
+    <text style="button-label">Cancel</text>
+  </view>
+</form>

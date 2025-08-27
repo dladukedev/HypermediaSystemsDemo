@@ -1,0 +1,46 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <!-- Shared -->
+      <style id="header" flexDirection="row" justifyContent="space-between" backgroundColor="white"
+        paddingHorizontal="24" paddingVertical="16" />
+      <style id="header-title" fontSize="20" fontWeight="bold" />
+      <style id="header-button" fontSize="20" color="dodgerblue" />
+
+      <style id="banner" fontSize="18" backgroundColor="palegreen" margin="8" padding="16" />
+      <style id="button" margin="8" padding="16" backgroundColor="white" justifyContent="center" borderRadius="16" />
+      <style id="button-primary" backgroundColor="dodgerblue" />
+      <style id="button-label" fontSize="16" color="dodgerblue" textAlign="center" />
+      <style id="button-label-delete" color="red" />
+      <style id="button-label-primary" color="white" />
+
+      <style id="edit-field" backgroundColor="white" borderBottomWidth="1" borderTopWidth="1" marginVertical="8"
+        padding="8" borderColor="lightgray" />
+      <style id="edit-field-label" color="dimgray" />
+      <style id="edit-field-error" color="red" />
+
+      <!-- Contact List Screen -->
+      <style id="search-field-area" paddingHorizontal="8" paddingBottom="8" backgroundColor="white" />
+      <style id="search-field" paddingHorizontal="8" backgroundColor="lightgray" borderRadius="8" />
+      <style id="contact-item" paddingHorizontal="24" paddingVertical="16" borderBottomColor="lightgray"
+        borderBottomWidth="1" backgroundColor="white" />
+      <style id="contact-item-label" fontSize="18" />
+
+      <!-- Contact Details Screen -->
+      <style id="contact-name" fontSize="24" textAlign="center" marginVertical="24" />
+      <style id="contact-section" backgroundColor="white" marginVertical="8" marginHorizontal="16" borderRadius="8"
+        padding="8" />
+      <style id="contact-section-label" color="dimgray" />
+      <style id="contact-section-info" fontSize="16" />
+    </styles>
+
+    <body style="body">
+      <header style="header">
+        @RenderSection("header", required: false)
+      </header>
+      <view style="main">
+        @RenderBody()
+      </view>
+    </body>
+  </screen>
+</doc>

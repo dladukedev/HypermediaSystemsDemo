@@ -71,11 +71,6 @@ public class ContactsController(
   {
     var validationResult = ContactValidator.Validate(contact);
 
-    validationResult.Errors.ToList().ForEach(x =>
-    {
-      Console.WriteLine(x.Key + " " + string.Concat(x.Value));
-    });
-
     if (validationResult.IsValid)
     {
       _contactRepo.AddContact(contact);

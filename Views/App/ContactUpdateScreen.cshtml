@@ -1,0 +1,48 @@
+@model ContactUpsertViewModel
+
+@{
+Layout = "_AppLayout";
+}
+
+
+@section Header{
+<text style="header-button">
+  <behavior trigger="press" action="back" href="#" />
+  Back
+</text>
+
+<text style="header-title">
+  Update Contact
+</text>
+
+<view />
+}
+
+<form>
+  <view id="form-fields">
+    @await Html.PartialAsync("./ContactForm.cshtml", Model)
+  </view>
+
+  <view style="button button-primary">
+    <behavior trigger="press" action="replace-inner" target="form-fields" href="/app/contacts/@Model.Contact.Id/edit"
+      verb="post" />
+    <text style="button-label button-label-primary">Save</text>
+  </view>
+
+  <view style="button">
+    <behavior trigger="press" action="reload" href="/app/contacts/@Model.Contact.Id" />
+    <text style="button-label">Cancel</text>
+  </view>
+
+  <view style="button button-delete">
+    <behavior xmlns:alert="https://hyperview.org/hyperview-alert" trigger="press" action="alert"
+      alert:title="Confirm delete" alert:message="Are you sure you want to delete @Model.Contact.FirstName?">
+      <alert:option alert:label="Confirm">
+        <behavior trigger="press" action="append" target="form-fields" href="/app/contacts/@Model.Contact.Id/delete"
+          verb="post" />
+      </alert:option>
+      <alert:option alert:label="Cancel" />
+    </behavior>
+    <text style="button-label button-label-delete">Delete Contact</text>
+  </view>
+</form>

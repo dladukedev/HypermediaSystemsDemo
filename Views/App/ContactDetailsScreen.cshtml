@@ -1,0 +1,54 @@
+@model ContactDetailsViewModel
+
+@{
+ViewData["Title"] = "";
+Layout = "_AppLayout";
+}
+
+@section Header{
+<text style="header-button">
+  <behavior trigger="press" action="back" />
+  Back
+</text>
+
+<text style="header-title">
+  Details
+</text>
+
+<text style="header-button">
+  <behavior trigger="press" action="reload" href="/app/contacts/@Model.Contact.Id/edit" />
+  Edit
+</text>
+}
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+<view style="banner">
+  <text>
+    @TempData["SuccessMessage"]
+  </text>
+</view>
+}
+
+<view style="details">
+  <text style="contact-name">
+    @Model.Contact.FullName
+  </text>
+
+  @if (!string.IsNullOrEmpty(@Model.Contact.FormattedPhone))
+  {
+  <view style="contact-section">
+    <text style="contact-section-label">Phone</text>
+    <text style="contact-section-info">@Model.Contact.FormattedPhone</text>
+  </view>
+  }
+
+  @if (!string.IsNullOrEmpty(@Model.Contact.Email))
+  {
+  <view style="contact-section">
+    <text style="contact-section-label">Email</text>
+    <text style="contact-section-info">@Model.Contact.Email</text>
+  </view>
+  }
+</view>

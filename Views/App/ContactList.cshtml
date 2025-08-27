@@ -1,0 +1,37 @@
+@model ContactAppListViewModel
+
+<items xmlns="https://hyperview.org/hyperview">
+  @foreach (var contact in Model.Contacts)
+  {
+  <item key="@contact.Id">
+    <view style="contact-item">
+      <behavior trigger="press" actions="push" href="/app/contacts/@contact.Id" />
+
+      <text style="contact-item-label">
+        @{
+        var text = "";
+        @if(!string.IsNullOrEmpty(contact.FirstName) && !string.IsNullOrEmpty(contact.LastName))
+        {
+        text = contact.FullName;
+        } else if(!string.IsNullOrEmpty(contact.PhoneNumber)) {
+        text = contact.FormattedPhone;
+        } else if(!string.IsNullOrEmpty(contact.Email)) {
+        text = contact.Email;
+        }
+        }
+
+        @text
+      </text>
+    </view>
+  </item>
+  }
+
+  @if(Model.Contacts.Count == 10)
+  {
+  <item key="load-more" id="load-more" style="load-more-item">
+    <behavior trigger="visible" action="replace" target="load-more"
+      href="/app/contacts?rows_only=true&page=@(Model.Page + 1)" verb="get" />
+    <spinner />
+  </item>
+  }
+</items>

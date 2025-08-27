@@ -15,7 +15,7 @@ public class Contact
   {
     get
     {
-      if (PhoneNumber is null) return null;
+      if (PhoneNumber is null || PhoneNumber.Length != 10 || PhoneNumber.Length != 11) return null;
 
       return PhoneNumber.Length == 11
         ? $"({PhoneNumber.Substring(1, 3)}) {PhoneNumber.Substring(4, 3)}-{PhoneNumber.Substring(7, 4)}"

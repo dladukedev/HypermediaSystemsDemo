@@ -62,7 +62,7 @@ public class ContactValidator
       Errors.Add("Phone Number must be all digits");
     }
 
-    if (phone.Length != 10 && (phone.First() != '1' && phone.Length == 11))
+    if (phone.Length != 10 || (phone.First() != '1' && phone.Length == 11))
     {
       Errors.Add("Phone Number Must be length 10 or 11");
     }
