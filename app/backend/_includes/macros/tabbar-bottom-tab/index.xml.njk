@@ -1,0 +1,15 @@
+{% macro tabbar_bottom_tab(id, label, selected) %}
+  <navigation:bottom-tab-bar-item
+    key="{{ id }}"
+    navigation:route="tab-{{ id }}"
+    style="tabbar-bottom-tab"
+  >
+    <view style="tabbar-bottom-tab-icon-selected">
+      {% include 'icons/' +  id + '-selected.svg' %}
+    </view>
+    <view style="tabbar-bottom-tab-icon">
+      {% include 'icons/' + id + '.svg' %}
+    </view>
+    <text style="tabbar-bottom-tabbar-top-label">{{ label }}</text>
+  </navigation:bottom-tab-bar-item>
+{% endmacro %}

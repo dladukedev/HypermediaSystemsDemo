@@ -1,0 +1,28 @@
+---
+permalink: "/ui/ui-elements/forms/text-field/index.xml"
+tags: "UI/UI Elements/Forms"
+hv_title: "Text Field"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/about/index.xml.njk' import about %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="form-group" flex="1" marginLeft="24" marginRight="24" marginTop="48"/>
+  <style
+    id="label"
+    borderColor="#4E4D4D"
+    fontSize="16"
+    fontWeight="bold"
+    lineHeight="24"
+    marginBottom="8"
+  />
+  {% include './_basic/styles.xml.njk' %}
+  {% include './_multiline/styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  {{ about('Text fields are used in forms to collect textual data') }}
+  {% include './_form.xml.njk' %}
+{% endblock %}

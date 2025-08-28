@@ -1,0 +1,12 @@
+---
+permalink: "/behaviors/basic/load/index.xml"
+tags: "Behaviors/Basic/Triggers"
+hv_title: "Load"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block content %}
+  {% include './_on-load/index.xml.njk' %}
+  {% include './_press/index.xml.njk' %}
+{% endblock %}

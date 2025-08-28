@@ -1,0 +1,28 @@
+---
+permalink: "/behaviors/advanced/dispatch/index.xml"
+tags: "Behaviors/Advanced"
+hv_title: "Dispatch Event"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="append" color="hotpink" fontSize="16" marginLeft="24"/>
+{% endblock %}
+
+{% block content %}
+  <view
+    action="append"
+    event-name="test-event"
+    href="/hyperview/public/behaviors/advanced/dispatch/append-screen.xml"
+    scroll="true"
+    style="main"
+    trigger="on-event"
+  >
+    {{ description('Dispatching an event is useful for cross-screen communication. This screen listens for the event `test-event` and appends content upon receipt. Press the button below and follow the instructions.') }}
+    {% call button('Open new screen', attributes={href:"/hyperview/public/behaviors/advanced/dispatch/source-screen.xml"}) -%}
+    {%- endcall %}
+  </view>
+{% endblock %}

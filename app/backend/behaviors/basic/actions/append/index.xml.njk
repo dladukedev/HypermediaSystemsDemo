@@ -1,0 +1,17 @@
+---
+permalink: "/behaviors/basic/append/index.xml"
+tags: "Behaviors/Basic/Actions"
+hv_title: "Append"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include './once/_styles.xml.njk' %}
+  {% include './nested/_styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  {% include './_once/index.xml.njk' %}
+  {% include './_nested/index.xml.njk' %}
+{% endblock %}

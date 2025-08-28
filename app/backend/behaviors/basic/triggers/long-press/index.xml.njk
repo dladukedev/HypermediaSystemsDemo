@@ -1,0 +1,12 @@
+---
+permalink: "/behaviors/basic/long-press/index.xml"
+tags: "Behaviors/Basic/Triggers"
+hv_title: "Long Press"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block content %}
+  {% include './_long-press-button/index.xml.njk' %}
+  {% include './_long-press-link/index.xml.njk' %}
+{% endblock %}

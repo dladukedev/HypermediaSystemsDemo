@@ -1,0 +1,18 @@
+{% macro tabbar_bottom(navigator) %}
+  <navigation:bottom-tab-bar
+    xmlns:navigation="https://hyperview.org/navigation"
+    navigation:navigator="{{ navigator }}"
+  >
+    <safe-area:safe-area-view
+      xmlns:safe-area="https://hyperview.org/safe-area"
+      key="tabbar-bottom"
+      style="tabbar-bottom"
+      safe-area:mode="padding"
+      safe-area:insets="[&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+    >
+      {% if caller %}
+        {{ caller() }}
+      {% endif %}
+    </safe-area:safe-area-view>
+  </navigation:bottom-tab-bar>
+{% endmacro %}

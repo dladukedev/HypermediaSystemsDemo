@@ -1,0 +1,25 @@
+---
+permalink: "/behaviors/basic/refresh/index.xml"
+tags: "Behaviors/Basic/Triggers"
+hv_title: "Refresh"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="box" borderColor="blue" borderWidth="2" padding="24" margin="24" />
+{% endblock %}
+
+{% block container %}
+  <view
+    id="container"
+    style="box"
+    action="replace-inner"
+    trigger="refresh"
+    href="/hyperview/public/behaviors/basic/triggers/refresh/replace_inner_fragment.xml"
+  >
+    {{ description('Pull down this box to replace its content.') }}
+  </view>
+{% endblock %}

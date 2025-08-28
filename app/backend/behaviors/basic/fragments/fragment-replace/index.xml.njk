@@ -1,0 +1,12 @@
+---
+permalink: "/behaviors/basic/fragment-replace/index.xml"
+tags: "Behaviors/Basic/Fragments"
+hv_title: "Fragments"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block content %}
+  {% include './_visible/index.xml.njk' %}
+  {% include './_hidden/index.xml.njk' %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% call button('URL-only') -%}
+  <behavior
+    xmlns:share="https://hyperview.org/share"
+    action="share"
+    share:url="https://www.xkcd.com"
+    trigger="press"
+  />
+{%- endcall %}
