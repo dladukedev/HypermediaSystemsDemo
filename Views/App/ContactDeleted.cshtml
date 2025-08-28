@@ -1,4 +1,12 @@
+@model ContactDeletedViewModel
+
 <view xmlns="https://hyperview.org/hyperview">
   <behavior trigger="load" action="dispatch-event" event-name="contact-updated" />
+
+  @if(!@Model.IsFromRoot)
+  {
   <behavior trigger="load" action="back" />
+  }
+
+  @await Html.PartialAsync("./Messages.cshtml")
 </view>

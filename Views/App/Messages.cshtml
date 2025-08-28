@@ -1,0 +1,6 @@
+@if (TempData["SuccessMessage"] != null)
+{
+var message = TempData["SuccessMessage"];
+<behavior xmlns:message="https://hypermedia.systems/hyperview/message" trigger="load" action="show-message"
+  message:text="@message" />
+}

@@ -4,24 +4,53 @@
   @foreach (var contact in Model.Contacts)
   {
   <item key="@contact.Id">
-    <view style="contact-item">
-      <behavior trigger="press" actions="push" href="/app/contacts/@contact.Id" />
+    <view id="item-@contact.Id">
+      <swipe:row xmlns:swipe="https://hypermedia.systems/hyperview/swipeable">
+        <swipe:main>
+          <view style="contact-item">
+            <behavior trigger="press" actions="push" href="/app/contacts/@contact.Id" />
 
-      <text style="contact-item-label">
-        @{
-        var text = "";
-        @if(!string.IsNullOrEmpty(contact.FirstName) && !string.IsNullOrEmpty(contact.LastName))
-        {
-        text = contact.FullName;
-        } else if(!string.IsNullOrEmpty(contact.PhoneNumber)) {
-        text = contact.FormattedPhone;
-        } else if(!string.IsNullOrEmpty(contact.Email)) {
-        text = contact.Email;
-        }
-        }
+            <text style="contact-item-label">
+              @{
+              var text = "";
+              @if(!string.IsNullOrEmpty(contact.FirstName) && !string.IsNullOrEmpty(contact.LastName))
+              {
+              text = contact.FullName;
+              } else if(!string.IsNullOrEmpty(contact.PhoneNumber)) {
+              text = contact.FormattedPhone;
+              } else if(!string.IsNullOrEmpty(contact.Email)) {
+              text = contact.Email;
+              }
+              }
 
-        @text
-      </text>
+              @text
+            </text>
+          </view>
+        </swipe:main>
+
+        <swipe:button>
+          <view style="swipe-button">
+            <behavior xmlns:alert="https://hyperview.org/hyperview-alert" trigger="press" action="alert"
+              alert:title="Confirm delete" alert:message="Are you sure you want to delete @contact.FirstName?">
+              <alert:option alert:label="Confirm">
+                <behavior trigger="press" action="append" target="item-@contact.Id"
+                  href="/app/contacts/@contact.Id/delete?root=true" verb="post" />
+              </alert:option>
+              <alert:option alert:label="Cancel" />
+            </behavior>
+
+            <text style="swipe-button-label swipe-button-label-delete">Delete</text>
+          </view>
+        </swipe:button>
+
+        <swipe:button>
+          <view style="swipe-button">
+            <behavior trigger="press" action="push" href="/app/contacts/@contact.Id/edit" />
+            <text style="swipe-button-label">Edit</text>
+          </view>
+        </swipe:button>
+
+      </swipe:row>
     </view>
   </item>
   }

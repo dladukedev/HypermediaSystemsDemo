@@ -1,12 +1,13 @@
-import { BottomTabBar, BottomTabBarItem } from './BottomTabBar';
-import { Map, MapMarker } from './Map';
-import { BottomSheet } from './BottomSheet';
-import { Filter } from './Filter';
-import { NavBack } from './NavBack';
-import { ProgressBar } from './ProgressBar';
-import { SafeAreaView } from './SafeAreaView';
-import { ScrollOpacity } from './ScrollOpacity';
-import { Svg } from './Svg';
+import { BottomTabBar, BottomTabBarItem } from "./BottomTabBar";
+import { Map, MapMarker } from "./Map";
+import { BottomSheet } from "./BottomSheet";
+import { Filter } from "./Filter";
+import { NavBack } from "./NavBack";
+import { ProgressBar } from "./ProgressBar";
+import { SafeAreaView } from "./SafeAreaView";
+import { ScrollOpacity } from "./ScrollOpacity";
+import { Svg } from "./Svg";
+import { SwipeableRow } from "./Swipable";
 
 export default [
   BottomSheet,
@@ -20,4 +21,5 @@ export default [
   SafeAreaView,
   ScrollOpacity,
   Svg,
+  SwipeableRow,
 ];

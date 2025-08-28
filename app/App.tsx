@@ -11,6 +11,7 @@ import LoadingScreen from "./src/loading-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 // this value needs to match the path prefix where the app is hosted
 // our demo app is hosted under instawork.github.io/hyperview
@@ -34,25 +35,27 @@ const linking = {
 };
 
 export default () => (
-  <SafeAreaProvider>
-    <NavigationContainer linking={linking}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <BottomTabBarContextProvider>
-          <Hyperview
-            behaviors={Behaviors}
-            components={Components}
-            entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/app`}
-            experimentalFeatures={{ navStateMutationsDelay: 10 }}
-            fetch={fetchWrapper}
-            formatDate={formatDate}
-            loadingScreen={LoadingScreen}
-            logger={new Logger(Logger.Level.log)}
-            navigationComponents={{
-              BottomTabBar,
-            }}
-          />
-        </BottomTabBarContextProvider>
-      </SafeAreaView>
-    </NavigationContainer>
-  </SafeAreaProvider>
+  <RootSiblingParent>
+    <SafeAreaProvider>
+      <NavigationContainer linking={linking}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <BottomTabBarContextProvider>
+            <Hyperview
+              behaviors={Behaviors}
+              components={Components}
+              entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/app`}
+              experimentalFeatures={{ navStateMutationsDelay: 10 }}
+              fetch={fetchWrapper}
+              formatDate={formatDate}
+              loadingScreen={LoadingScreen}
+              logger={new Logger(Logger.Level.log)}
+              navigationComponents={{
+                BottomTabBar,
+              }}
+            />
+          </BottomTabBarContextProvider>
+        </SafeAreaView>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  </RootSiblingParent>
 );

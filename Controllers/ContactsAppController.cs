@@ -102,7 +102,7 @@ public class ContactsAppController(
 
   [HttpPost]
   [Route("app/contacts/{id}/delete")]
-  public IActionResult Delete(int id)
+  public IActionResult Delete(int id, bool? root)
   {
     var deletedContact = _contactRepo.DeleteContact(id);
 
@@ -110,7 +110,12 @@ public class ContactsAppController(
 
     TempData["SuccessMessage"] = "Contact Removed!";
 
-    return PartialView("../App/ContactDeleted");
+    var vm = new ContactDeletedViewModel()
+    {
+      IsFromRoot = root ?? false
+    };
+
+    return PartialView("../App/ContactDeleted", vm);
   }
 
   [HttpGet]

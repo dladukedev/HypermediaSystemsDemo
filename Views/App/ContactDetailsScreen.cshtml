@@ -21,17 +21,9 @@ Layout = "_AppLayout";
 </text>
 }
 
-
-@if (TempData["SuccessMessage"] != null)
-{
-<view style="banner">
-  <text>
-    @TempData["SuccessMessage"]
-  </text>
-</view>
-}
-
 <view style="details">
+  @await Html.PartialAsync("./Messages.cshtml")
+
   <text style="contact-name">
     @Model.Contact.FullName
   </text>
@@ -39,6 +31,9 @@ Layout = "_AppLayout";
   @if (!string.IsNullOrEmpty(@Model.Contact.FormattedPhone))
   {
   <view style="contact-section">
+    <behavior xmlns:comms="https://hypermedia.systems/hyperview/communications" trigger="press" action="open-phone"
+      comms:phone-number="@Model.Contact.PhoneNumber" />
+
     <text style="contact-section-label">Phone</text>
     <text style="contact-section-info">@Model.Contact.FormattedPhone</text>
   </view>
@@ -47,6 +42,9 @@ Layout = "_AppLayout";
   @if (!string.IsNullOrEmpty(@Model.Contact.Email))
   {
   <view style="contact-section">
+    <behavior xmlns:comms="https://hypermedia.systems/hyperview/communications" trigger="press" action="open-email"
+      comms:email-address="@Model.Contact.Email" />
+
     <text style="contact-section-label">Email</text>
     <text style="contact-section-info">@Model.Contact.Email</text>
   </view>
